@@ -32,6 +32,6 @@ Dimitrij reminds you around 15:00 to play some table tennis.
 
 4. Follow the invite link in the console.
 
-## License
+## License ##
 
 Dimitrij is released under the [MIT License](https://opensource.org/licenses/MIT).
