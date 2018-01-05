@@ -19,13 +19,13 @@ def starting_message(user)
     ---------------------------------------------------
     #{PING_PONG} LET'S PLAY TABLE TENNIS! #{PING_PONG}
     ---------------------------------------------------
-    #{user.display_name} started a new match.
+    #{user.name} started a new match.
     Waiting for players to join...
   HEREDOC
 end
 
 def team_message(users)
-  user_names = users.map(&:display_name).shuffle
+  user_names = users.map(&:name).shuffle
   left, right = user_names.each_slice((user_names.size / 2.0).round).to_a.map { |team| team.join(', ') }
   left, right = [left, right].shuffle
   <<~HEREDOC
@@ -56,10 +56,10 @@ Bot.message(content: '!tt') do |event|
     else
       if users.index(reaction_event.user)
         users.delete(reaction_event.user)
-        notifications << event.respond("#{reaction_event.user.display_name} left the team.")
+        notifications << event.respond("#{reaction_event.user.name} left the team.")
       else
         users << reaction_event.user
-        notifications << event.respond("#{reaction_event.user.display_name} joined the team.")
+        notifications << event.respond("#{reaction_event.user.name} joined the team.")
       end
       false
     end
