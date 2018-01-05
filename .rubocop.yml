@@ -1,0 +1,8 @@
+AllCops:
+  TargetRubyVersion: 2.4.3
+Documentation:
+  Enabled: false
+Style/Lambda:
+  EnforcedStyle: literal
+Metrics/LineLength:
+  Max: false
