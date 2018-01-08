@@ -1,3 +1,5 @@
 .byebug_history
 config/discord.yml
 db/dimitrij_database.db
+log/*
+!log/.keep
