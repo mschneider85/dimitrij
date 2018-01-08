@@ -1,0 +1,20 @@
+en:
+  flip:
+    heads: Heads
+    tails: Tails
+  language:
+    choose: Choose a language.
+    changed: Language set to 🇬🇧 English.
+  reminder_bot:
+    message: |
+      --------------------------------------------------
+      🕒 IT'S TABLE TENNIS O'CLOCK! 🕒
+      --------------------------------------------------
+      Type `!tt` to start a match.
+  tt:
+    joined: "%{player} has joined the match."
+    left: "%{player} has left the match."
+    complete: TEAMS ARE COMPLETE!
+    lets_play: LET'S PLAY TABLE TENNIS!
+    started_a_match: "%{player} started a new match."
+    waiting: Waiting for players to join...

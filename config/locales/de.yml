@@ -1,0 +1,20 @@
+de:
+  flip:
+    heads: Kopf
+    tails: Zahl
+  language:
+    choose: Wähle eine Sprache.
+    changed: Sprache auf 🇩🇪 Deutsch geändert.
+  reminder_bot:
+    message: |
+      --------------------------------------------------
+      🕒 ES IST TISCHTENNIS-ZEIT 🕒
+      --------------------------------------------------
+      Gib `!tt` ein, um ein Spiel zu starten.
+  tt:
+    joined: "%{player} ist dem Spiel beigetreten."
+    left: "%{player} hat das Spiel verlassen."
+    complete: DIE TEAMS STEHEN!
+    lets_play: LASST UNS TISCHTENNIS SPIELEN!
+    started_a_match: "%{player} hat ein neues Spiel gestartet."
+    waiting: Warte auf Spieler...
