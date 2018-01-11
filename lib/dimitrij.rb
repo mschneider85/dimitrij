@@ -29,14 +29,11 @@ module Dimitrij
   )
   puts "This bot's invite URL is #{BOT.invite_url}."
 
-  require_relative 'dimitrij/reminder_bot'
   require_relative 'dimitrij/commands'
+  require_relative 'dimitrij/events'
 
   Dimitrij::Commands.include!
+  Dimitrij::Events.include!
 
-  BOT.run(:async)
-
-  ReminderBot.call
-
-  BOT.sync
+  BOT.run
 end
