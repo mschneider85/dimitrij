@@ -1,9 +1,13 @@
 module Dimitrij::Events::Remind
   extend Discordrb::EventContainer
-  heartbeat do
-    Dimitrij::BOT.servers.keys.each do |server_id|
-      Dimitrij::BOT.server(server_id).channels.each do |channel|
-        next unless channel.text? && remind?(channel)
+
+  heartbeat do |event|
+    event.bot.servers.values.each do |server|
+      bot_profile = event.bot.profile.on(server)
+
+      server.text_channels.each do |channel|
+        next unless permissions?(bot_profile, channel) && remind?(channel)
+
         I18n.with_locale(Channel.call(channel.id).language) do
           channel.send I18n.t('reminder_bot.message')
         end
@@ -12,8 +16,18 @@ module Dimitrij::Events::Remind
     end
   end
 
-  def self.remind?(channel)
-    return false unless Time.now.hour == 15
-    !Channel.call(channel.id).reminded_today?
+  class << self
+    def remind?(channel)
+      return false unless Time.now.hour == 15
+      !Channel.call(channel.id).reminded_today?
+      true
+    end
+
+    def permissions?(bot_profile, channel)
+      %i[read_messages send_messages].each do |permission|
+        return false if bot_profile.permission?(permission, channel)
+      end
+      true
+    end
   end
 end
