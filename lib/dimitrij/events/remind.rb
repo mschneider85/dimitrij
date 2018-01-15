@@ -20,12 +20,11 @@ module Dimitrij::Events::Remind
     def remind?(channel)
       return false unless Time.now.hour == 15
       !Channel.call(channel.id).reminded_today?
-      true
     end
 
     def permissions?(bot_profile, channel)
       %i[read_messages send_messages].each do |permission|
-        return false if bot_profile.permission?(permission, channel)
+        return false unless bot_profile.permission?(permission, channel)
       end
       true
     end
