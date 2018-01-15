@@ -2,7 +2,8 @@ module Dimitrij::Events
   Dir["#{File.dirname(__FILE__)}/events/*.rb"].each { |file| require file }
 
   @events = [
-    Remind
+    Heartbeat,
+    Ready
   ]
 
   def self.include!

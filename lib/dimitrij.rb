@@ -27,7 +27,7 @@ module Dimitrij
     client_id: CONFIG['client_id'],
     prefix: '!'
   )
-  puts "This bot's invite URL is #{BOT.invite_url}."
+  Discordrb::LOGGER.info "This bot's invite URL is #{BOT.invite_url}."
 
   require_relative 'dimitrij/commands'
   require_relative 'dimitrij/events'

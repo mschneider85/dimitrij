@@ -47,7 +47,7 @@ module Dimitrij::Commands::Tt
         notifications.each(&:delete)
         message.delete
         I18n.with_locale(event.channel.language) { event.respond team_message(users) }
-        event.respond 'GL & HF'
+        message = event.respond 'GL & HF'
         true
       else
         if users.index(reaction_event.user)

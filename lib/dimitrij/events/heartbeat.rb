@@ -1,4 +1,4 @@
-module Dimitrij::Events::Remind
+module Dimitrij::Events::Heartbeat
   extend Discordrb::EventContainer
 
   heartbeat do |event|
