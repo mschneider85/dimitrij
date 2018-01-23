@@ -6,6 +6,6 @@ class User < ApplicationRecord
   scope :on_channel, ->(channel_id) { joins(:teams).where(teams: { channel_id: channel_id }) }
 
   def self.mvp
-    all.max{ u.teams.sum { |t| t.games_won.length } }
+    all.max { |u| u.teams.sum { |t| t.games_won.length } }
   end
 end
