@@ -18,3 +18,8 @@ de:
     lets_play: LASST UNS TISCHTENNIS SPIELEN!
     started_a_match: "%{player} hat ein neues Spiel gestartet."
     waiting: Warte auf Spieler...
+  support:
+    array:
+      last_word_connector: " und "
+      two_words_connector: " und "
+      words_connector: ", "

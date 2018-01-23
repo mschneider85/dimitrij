@@ -5,7 +5,9 @@ module Dimitrij::Commands
     Lang,
     Tt,
     Flip,
-    Roll
+    Roll,
+    Result,
+    Stats
   ]
 
   def self.include!

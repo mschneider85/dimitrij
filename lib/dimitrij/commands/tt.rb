@@ -13,16 +13,38 @@ module Dimitrij::Commands::Tt
       HEREDOC
     end
 
-    def team_message(users)
-      user_names = users.map(&:name).shuffle
-      left, right = user_names.each_slice((user_names.size / 2.0).round).to_a.map { |team| team.join(', ') }
+    def create_teams(users, channel_id)
+      users = users.map do |user|
+        User.find_by(id: user.id) || User.create(
+          id: user.id,
+          name: user.name,
+          discriminator: user.discriminator
+        )
+      end
+
+      users = users.shuffle
+      left, right = users.each_slice((users.size / 2.0).round).to_a
       left, right = [left, right].shuffle
+
+      team = Team.find_by(channel_id: channel_id, player_ids: (left || []).map(&:id).sort)
+      left_team = team || left && Team.create(channel_id: channel_id, users: left)
+
+      team = Team.find_by(channel_id: channel_id, player_ids: (right || []).map(&:id).sort)
+      right_team = team || right && Team.create(channel_id: channel_id, users: right)
+
+      {
+        left: left_team,
+        right: right_team
+      }
+    end
+
+    def team_message(teams)
       <<~HEREDOC
         ---------------------------------------------------
         #{PING_PONG} #{I18n.t('tt.complete')} #{PING_PONG}
         ---------------------------------------------------
-        Team A: #{left}
-        Team B: #{right}
+        Team A: #{teams[:left]&.players}
+        Team B: #{teams[:right]&.players}
       HEREDOC
     end
   end
@@ -46,7 +68,11 @@ module Dimitrij::Commands::Tt
       if reaction_event.user == event.user
         notifications.each(&:delete)
         message.delete
-        I18n.with_locale(event.channel.language) { event.respond team_message(users) }
+
+        teams = create_teams(users, reaction_event.channel.id)
+        Game.create(channel_id: reaction_event.channel.id, team_a: teams[:left], team_b: teams[:right])
+
+        I18n.with_locale(event.channel.language) { event.respond team_message(teams) }
         message = event.respond 'GL & HF'
         true
       else

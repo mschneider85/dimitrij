@@ -1,8 +1,11 @@
 class Channel < ApplicationRecord
-  enum language: %i[en de]
+  enum language: %i[de en]
+  belongs_to :server
+  has_many :teams
+  has_many :games
 
-  def self.call(channel_id)
-    find_or_create_by(channel_id: channel_id)
+  def self.call(id)
+    find_or_create_by(id: id)
   end
 
   def reminded_today?
@@ -10,7 +13,11 @@ class Channel < ApplicationRecord
   end
 
   def set_reminded_at
-    update reminded_at: Time.now
+    update(reminded_at: Time.now)
+  end
+
+  def combined_name
+    (server && "#{server.name}/" || '') + name
   end
 end
 
