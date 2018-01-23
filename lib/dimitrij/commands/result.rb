@@ -7,6 +7,7 @@ module Dimitrij::Commands::Result
   command(:result, description: 'Add game results.') do |event|
     game = Game.order(created_at: :desc)
                .where(winner: nil, channel_id: event.channel.id)
+               .where.not(team_a: nil, team_b: nil)
                .where('date(created_at) = ?', Date.today)
                .last
     game.present? ? RegisterScore.call(game, event) : event.respond('Kein Spiel gefunden.')
