@@ -16,7 +16,7 @@ class Team < ApplicationRecord
       channel = Channel.call(channel_id)
 
       teams = channel_id ? where(channel_id: channel_id) : all
-      best10 = teams.sort_by { |t| t.games_won.length }.reverse[0..9]
+      best10 = teams.sort_by { |t| [t.games_won.length, t.win_ratio] }.reverse[0..9]
 
       max_team_length = teams.map { |c| c.players.length }.max || 0
       max_games_won_length = best10.first&.games_won&.length&.digits&.length || 0
@@ -75,12 +75,16 @@ class Team < ApplicationRecord
     users.map(&:name).to_sentence(locale: locale)
   end
 
+  def games
+    Game.where(team_a_id: id).or(Game.where(team_b_id: id))
+  end
+
   def games_won
-    @games_won ||= Game.where(team_a_id: id, winner: 'a').union(Game.where(team_b_id: id, winner: 'b'))
+    @games_won ||= Game.where(team_a_id: id, winner: 'a').or(Game.where(team_b_id: id, winner: 'b'))
   end
 
   def games_lost
-    @games_lost ||= Game.where(team_a_id: id, winner: 'b').union(Game.where(team_b_id: id, winner: 'a'))
+    @games_lost ||= Game.where(team_a_id: id, winner: 'b').or(Game.where(team_b_id: id, winner: 'a'))
   end
 
   def win_ratio
