@@ -27,10 +27,10 @@ module Dimitrij::Commands::Tt
       left, right = [left, right].shuffle
 
       team = Team.find_by(channel_id: channel_id, player_ids: (left || []).map(&:id).sort)
-      left_team = team || left && Team.create(channel_id: channel_id, users: left)
+      left_team = team || left && Team.create(channel_id: channel_id, users: left.sort_by(&:id))
 
       team = Team.find_by(channel_id: channel_id, player_ids: (right || []).map(&:id).sort)
-      right_team = team || right && Team.create(channel_id: channel_id, users: right)
+      right_team = team || right && Team.create(channel_id: channel_id, users: right.sort_by(&:id))
 
       {
         left: left_team,

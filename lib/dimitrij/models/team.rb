@@ -16,7 +16,7 @@ class Team < ApplicationRecord
       channel = Channel.call(channel_id)
 
       teams = channel_id ? where(channel_id: channel_id) : all
-      best10 = teams.sort{ |t| t.games_won.length }.reverse[0..9]
+      best10 = teams.sort_by { |t| t.games_won.length }.reverse[0..9]
 
       max_team_length = teams.map { |c| c.players.length }.max || 0
       max_games_won_length = best10.first&.games_won&.length&.digits&.length || 0
@@ -31,7 +31,7 @@ class Team < ApplicationRecord
 
       @str << "\nTotal games played: #{channel.games.length}"
       @str << "\nGames played this month: #{channel.games.this_month.length}"
-      @str << "\nMVP: #{User.on_channel(channel_id).mvp.name}"
+      @str << "\nMVP: #{User.on_channel(channel_id).mvp(channel_id).name}"
 
       @str << "\n\n##Leaderboard\n"
 

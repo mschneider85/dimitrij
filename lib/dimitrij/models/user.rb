@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   scope :on_channel, ->(channel_id) { joins(:teams).where(teams: { channel_id: channel_id }) }
 
-  def self.mvp
-    all.max { |u| u.teams.sum { |t| t.games_won.length } }
+  def self.mvp(channel_id)
+    all.sort_by { |u| -u.teams.where(channel_id: channel_id).sum { |t| t.games_won.length } }.first
   end
 end

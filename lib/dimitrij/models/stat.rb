@@ -9,7 +9,7 @@ class Stat
         team: team.players,
         wins: channel_games.where(team_a: team, winner: 'a').or(channel_games.where(team_b: team, winner: 'b')).length
       }
-    end.sort_by { |t| t[:wins] }
+    end.sort_by { |t| -t[:wins] }
   end
 
   def players; end
