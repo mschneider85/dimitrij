@@ -31,35 +31,37 @@ class Team < ApplicationRecord
 
       @str << "\nTotal games played: #{channel.games.length}"
       @str << "\nGames played this month: #{channel.games.this_month.length}"
-      @str << "\nMVP: #{User.on_channel(channel_id).mvp(channel_id).name}"
-
-      @str << "\n\n##Leaderboard\n"
-
-      @str << [
-        "\n|" + ' # ',
-        'Team'.center(max_team_length + 2),
-        'W'.center(max_games_won_length + 2),
-        'L'.center(max_games_lost_length + 2),
-        'W%'.center(9) + '|'
-      ].join('|')
-
-      @str << [
-        "\n|" + '---',
-        dashes(max_team_length + 2),
-        dashes(max_games_won_length + 2),
-        dashes(max_games_lost_length + 2),
-        dashes(9) + '|'
-      ].join('|')
-
-      best10.each.with_index(1) do |team, index|
-        @str << [
-          "\n|#{index.to_s.rjust(2)} ",
-          ' ' + team.players.ljust(max_team_length) + ' ',
-          ' ' + team.games_won.length.to_s.rjust(max_games_won_length) + ' ',
-          ' ' + team.games_lost.length.to_s.rjust(max_games_lost_length) + ' ',
-          ' ' + team.win_ratio + ' ' + '|'
-        ].join('|')
-      end
+      @str << "\n---"
+      @str << "\nContribute at **https://github.com/mschneider85/dimitrij** to fix the team statistics."
+      # @str << "\nMVP: #{User.on_channel(channel_id).mvp(channel_id).name}"
+      #
+      # @str << "\n\n##Leaderboard\n"
+      #
+      # @str << [
+      #   "\n|" + ' # ',
+      #   'Team'.center(max_team_length + 2),
+      #   'W'.center(max_games_won_length + 2),
+      #   'L'.center(max_games_lost_length + 2),
+      #   'W%'.center(9) + '|'
+      # ].join('|')
+      #
+      # @str << [
+      #   "\n|" + '---',
+      #   dashes(max_team_length + 2),
+      #   dashes(max_games_won_length + 2),
+      #   dashes(max_games_lost_length + 2),
+      #   dashes(9) + '|'
+      # ].join('|')
+      #
+      # best10.each.with_index(1) do |team, index|
+      #   @str << [
+      #     "\n|#{index.to_s.rjust(2)} ",
+      #     ' ' + team.players.ljust(max_team_length) + ' ',
+      #     ' ' + team.games_won.length.to_s.rjust(max_games_won_length) + ' ',
+      #     ' ' + team.games_lost.length.to_s.rjust(max_games_lost_length) + ' ',
+      #     ' ' + team.win_ratio + ' ' + '|'
+      #   ].join('|')
+      # end
       @str << "\n```"
       @str
     end
