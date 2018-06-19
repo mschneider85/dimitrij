@@ -41,6 +41,7 @@ module Dimitrij::Commands::Tt
     message.create_reaction CHECK_MARK
 
     Dimitrij::BOT.add_await(:"join_#{message.id}", Discordrb::Events::ReactionAddEvent, emoji: CHECK_MARK) do |reaction_event|
+      next if reaction_event.user.id == Dimitrij::CONFIG['client_id']
       next unless reaction_event.message.id == message.id
 
       if reaction_event.user == event.user
